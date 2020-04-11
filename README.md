@@ -3,10 +3,10 @@ Project yang memuat program elevator untuk memenuhi tugas UTS mata kuliah Analis
 
 Projek ini dibuat oleh kelompok 3 dengan data anggota sebagai berikut:
 
-- 1815240xx Rayhan Azka
-- 1815240xx Mufqi
-- 1815240xx Fatharani
-- 1815240xx Khoi
-- 1815240xx Dewanto
-- 1815240xx Fajrina
-- 1815240xx Chofief
+- 181524004 Chofief Al Farroqie
+- 181524005 Dewanto Joyo Pramono
+- 181524008 Fajrina Aflaha
+- 181524009 Fatharani
+- 181524014 Khoirunnisa Putri K
+- 181524017 Mufqi Uwais
+- 181524028 Rayhan Azka A
