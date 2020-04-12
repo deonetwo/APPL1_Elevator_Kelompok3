@@ -1,10 +1,21 @@
 package controller;
+//import java.util.LinkedList;
+import java.util.Queue;
+
+import component.FloorRequest;
 
 public class FloorRequestLogger {
-    //floorNumber
-    //cabID
-    //queue requestQueue
+    private Queue<FloorRequest> requestQueue;
 
-    //AddFloorRequestToQueue()
-    //FloorRequestButtonPressed(cabID, floorNumber) ??????
+    public FloorRequestLogger(Queue<FloorRequest> requestQueue) {
+        this.requestQueue = requestQueue;
+    }
+
+    public void AddFloorRequestToQueue(FloorRequest floorRequest) {
+        this.requestQueue.add(floorRequest);
+    }
+
+    public Queue<FloorRequest> getRequestQueue() {
+        return this.requestQueue;
+    }
 }

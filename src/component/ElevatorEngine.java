@@ -1,14 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package component;
 
-/**
- *
- * @author Rayhan Anandhias
- */
 public class ElevatorEngine {
-    
-}
+    int speed;
+    String direction;
+
+    public void move(int speed, String direction){
+        this.speed = speed;
+        this.direction = direction;
+    }
+
+    public int getSpeed(){
+        return this.speed;
+    }
+
+    public String getDirection(){
+        return this.direction;
+    }
+}    
