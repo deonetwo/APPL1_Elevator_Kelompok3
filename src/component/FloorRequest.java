@@ -37,4 +37,20 @@ public class FloorRequest {
     public boolean checkLightState() {
         return this.lightState;
     }
+
+    @Override
+    public int hashCode() {
+        return getFloorNumber();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null)
+            return false;
+        if(!(obj instanceof FloorRequest))
+            return false;
+        if(obj == this)
+            return true;
+        return this.getFloorNumber() == ((FloorRequest) obj).getFloorNumber();
+    }
 }

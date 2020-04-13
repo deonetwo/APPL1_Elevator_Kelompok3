@@ -36,6 +36,7 @@ public class CabNavigator {
             calculateNewPosition();
         }
         calculateNewSpeed();
+        System.out.println("Elevator Stopped at Floor " + floor.getFloorNumber() + "\n");
     }
 
     void calculateNewSpeed() {

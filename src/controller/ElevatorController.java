@@ -1,11 +1,13 @@
 package controller;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.LinkedHashSet;
+//import java.util.LinkedList;
+//import java.util.Queue;
 import component.*;
 import java.util.Scanner;
+import java.util.Set;
 
 public class ElevatorController {
-    public Queue<FloorRequest> requestQueue;
+    public Set<FloorRequest> requestQueue;
     public FloorRequest floorRequest;
     public FloorRequestLogger floorRequestLogger;
     public RequestDispatcher requestDispatcher;
@@ -15,10 +17,10 @@ public class ElevatorController {
     public DirectionDisplay directionDisplay;
     public FloorNumberDisplay floorNumberDisplay;
     public PositionMarkerSensor positionMarkerSensor;
-    Scanner scan;
+    private Scanner scan;
 
     public ElevatorController() {
-        requestQueue = new LinkedList<FloorRequest>();
+        requestQueue = new LinkedHashSet<FloorRequest>();
         floorRequestLogger = new FloorRequestLogger(requestQueue);
         requestDispatcher = new RequestDispatcher(requestQueue);
         scan = new Scanner(System.in);
@@ -40,8 +42,7 @@ public class ElevatorController {
             System.out.println("Masukkan  Berat penumpang : ");
             berat = scan.nextInt(); 
             ac_berat += berat;
-            floorRequest = FloorRequest.pressed(fnumber);
-            floorRequestLogger.AddFloorRequestToQueue(floorRequest);
+            floorRequestLogger.AddFloorRequestToQueue(FloorRequest.pressed(fnumber));
         }
         positionMarkerSensor.setPosition(FloorRequest.pressed(1));
         cabNavigator = new CabNavigator(0, elevatorEngine, directionDisplay, floorNumberDisplay, positionMarkerSensor);

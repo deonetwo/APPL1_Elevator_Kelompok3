@@ -1,13 +1,16 @@
 package controller;
+
+import java.util.Iterator;
 //import java.util.LinkedList;
-import java.util.Queue;
+//import java.util.Queue;
+import java.util.Set;
 
 import component.FloorRequest;
 
 public class RequestDispatcher {
-    private Queue<FloorRequest> requestQueue;
+    private Set<FloorRequest> requestQueue;
 
-    public RequestDispatcher(Queue<FloorRequest> requestQueue) {
+    public RequestDispatcher(Set<FloorRequest> requestQueue) {
         this.requestQueue = requestQueue;
     }
 
@@ -16,10 +19,13 @@ public class RequestDispatcher {
     }
 
     public FloorRequest determineNextRequestToProcess() {
-        return requestQueue.poll();
+        Iterator<FloorRequest> it = requestQueue.iterator();
+        FloorRequest head = it.next();
+        it.remove();
+        return head;
     }
 
-    public Queue<FloorRequest> getRequestQueue() {
+    public Set<FloorRequest> getRequestQueue() {
         return this.requestQueue;
     }
 

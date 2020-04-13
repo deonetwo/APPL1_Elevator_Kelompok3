@@ -1,13 +1,15 @@
 package controller;
+
 //import java.util.LinkedList;
-import java.util.Queue;
+//import java.util.Queue;
+import java.util.Set;
 
 import component.FloorRequest;
 
 public class FloorRequestLogger {
-    private Queue<FloorRequest> requestQueue;
+    private Set<FloorRequest> requestQueue;
 
-    public FloorRequestLogger(Queue<FloorRequest> requestQueue) {
+    public FloorRequestLogger(Set<FloorRequest> requestQueue) {
         this.requestQueue = requestQueue;
     }
 
@@ -15,7 +17,7 @@ public class FloorRequestLogger {
         this.requestQueue.add(floorRequest);
     }
 
-    public Queue<FloorRequest> getRequestQueue() {
+    public Set<FloorRequest> getRequestQueue() {
         return this.requestQueue;
     }
 }
