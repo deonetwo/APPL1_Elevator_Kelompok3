@@ -4,7 +4,7 @@ import controller.SystemManager;
 
 /**
  *
- * @author User
+ * @author KhoirunnisaPutri
  */
 public class MaintenanceSwitch{
     private boolean isRunning;
@@ -16,13 +16,13 @@ public class MaintenanceSwitch{
     public void TurnOn(){
         this.isRunning = true;          
         SysManage.Initialize();
-        System.out.println("Lift telah dinyalakan");
+        System.out.println("The elevator has been turned on");
     }
     
     public void TurnOff(){
         this.isRunning = false;
         SysManage.ShutDown();
-        System.out.println("Lift telah dimatikan");
+        System.out.println("The elevator has been turned off");
     }
     
     public boolean getElevatorStat(){

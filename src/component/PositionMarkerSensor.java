@@ -1,13 +1,13 @@
 package component;
 
 public class PositionMarkerSensor {
-    private FloorRequest position;
+    private Request position;
 
-    public FloorRequest MarkerDetected(){
+    public Request MarkerDetected(){
         return this.position;
     }
 
-    public void setPosition(FloorRequest fRequest){
+    public void setPosition(Request fRequest){
         this.position = fRequest;
     }
 }    

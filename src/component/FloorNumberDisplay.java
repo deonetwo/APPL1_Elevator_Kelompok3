@@ -7,7 +7,7 @@ public class FloorNumberDisplay {
 
     // public FloorNumberDisplay(){}
 
-    public void show (FloorRequest floor){
+    public void show (Request floor){
         System.out.println("Elevator is in floor " + floor.getFloorNumber());
     }
     //show(direction)
