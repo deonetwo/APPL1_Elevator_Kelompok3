@@ -6,7 +6,5 @@ package component;
  */
 public class SummonButton {
     int floor;
-    boolean buttonUp;
-    boolean buttonDown;
-    
+    String direction; // Up or Down;
 }
