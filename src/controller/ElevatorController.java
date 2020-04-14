@@ -17,6 +17,8 @@ public class ElevatorController {
     public DirectionDisplay directionDisplay;
     public FloorNumberDisplay floorNumberDisplay;
     public PositionMarkerSensor positionMarkerSensor;
+    public LoadSensor loadSensor;
+    public LoadBell loadBell;
     private Scanner scan;
 
     public ElevatorController() {

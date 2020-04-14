@@ -9,7 +9,7 @@ public class CabController {
     private CabNavigator cabNavigator;
 
     public CabController(RequestDispatcher requestDispatcher,
-         int weight, CabNavigator cabNavigator) {
+        int weight, CabNavigator cabNavigator) {
         this.requestDispatcher = requestDispatcher;
         //this.floorRequest = floorRequest;
         this.weight = weight;
