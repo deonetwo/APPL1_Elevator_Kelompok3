@@ -114,7 +114,7 @@ public class ElevatorController {
             weight = scan.nextInt();
             if (positionMarkerSensor.MarkerDetected().getFloorNumber() == sourceFloor.getFloorNumber()) {
                 Passenger newPassenger = new Passenger(id, weight, sourceFloor, destinationFloor, true);
-                if (cabController.WeightChanged(newPassenger) != cabController.getLoadSensor().OverWeight) {
+                if (cabController.getLoadSensor().WeightChanged(newPassenger) != cabController.getLoadSensor().OverWeight) {
                     passengerLogger.AddPassengerToQueue(newPassenger);
                     temp.add(id);
                 }

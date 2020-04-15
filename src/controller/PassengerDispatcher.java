@@ -1,5 +1,6 @@
 package controller;
 
+import component.LoadSensor;
 import java.util.Iterator;
 //import java.util.LinkedList;
 //import java.util.Queue;
@@ -15,6 +16,7 @@ import component.PositionMarkerSensor;
 
 public class PassengerDispatcher {
     private Set<Passenger> passengerQueue;
+    private LoadSensor loadSensor;
 
     public PassengerDispatcher(Set<Passenger> passengerQueue) {
         this.passengerQueue = passengerQueue;
@@ -40,13 +42,16 @@ public class PassengerDispatcher {
                 current.getDestination().getFloorNumber() == 
                 positionMarkerSensor.MarkerDetected().getFloorNumber()) {
                 System.out.println("Passenger "+ current.getId() + " has arrived at destination");
+                loadSensor.addWeight(-current.getWeight());
                 it.remove();
                 
             } else if(current.isStatus() == false && 
                 current.getSourceFloor().getFloorNumber() == 
                 positionMarkerSensor.MarkerDetected().getFloorNumber()) {
-                System.out.println("Passenger "+ current.getId() + " has entered the cab");
-                current.setStatus(true);
+                if(loadSensor.WeightChanged(current) != loadSensor.OverWeight){
+                    System.out.println("Passenger "+ current.getId() + " has entered the cab");
+                    current.setStatus(true);
+                }
             }
         }
         //System.out.println();
@@ -56,5 +61,8 @@ public class PassengerDispatcher {
         return this.passengerQueue;
     }
 
+    public void setLoadSensor(LoadSensor loadSensor){
+        this.loadSensor = loadSensor;
+    }
     //checkForAvailableCabs()   ??????? Buat naon ieu
 }
