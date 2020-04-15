@@ -20,7 +20,14 @@ public class SummonButton extends Request {
     }
 
     public static SummonButton pressed(int number) {
-        return new SummonButton(number);
+        SummonButton sb = new SummonButton(number);
+        sb.turnLightOn();
+        System.out.println("(Light Summon Button at Floor "+sb.getFloorNumber()+" is On!)");
+        return sb;
+    }
+    public static void released(SummonButton sb){
+        sb.turnLightOff();
+        System.out.println("(Light Summon Button at Floor "+sb.getFloorNumber()+" is Off!)");
     }
 
     @Override
