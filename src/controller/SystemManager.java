@@ -1,32 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controller;
 
-import component.FloorRequest;
+import component.PositionMarkerSensor;
+import component.SummonButton;
 //import component.MaintenanceSwitch;
 
 /**
  *
- * @author User
+ * Penanggung jawab : khoirunnisa
  */
 public class SystemManager {
-    private FloorRequest floor;
-    public SystemManager(FloorRequest floor){
-        this.floor=floor;
+    private PositionMarkerSensor position;
+    private DoorOperator doorOperator;
+    public SystemManager(PositionMarkerSensor position, DoorOperator doorOperator){
+        this.position=position;
+        this.doorOperator=doorOperator;
     }
     public void ShutDown(){
-        //tutup pintu
-        floor.turnLightOff();
-        //matiin lampu summon button 
-        //ngestop lift
-        
+        position.setPosition(SummonButton.pressed(1));
+        doorOperator.doorClosed();
     }
     public void Initialize(){
-        //floor.turnLightOn();
-        //nyalain lampu summon button
+
     }
     
 }

@@ -32,7 +32,8 @@ public class ElevatorController {
     public DoorOperator doorOperator;
     public DoorOpeningDevice doorOpeningDevice;
     public static final int SAFETY_LIMIT = 1000;
-
+    private SystemManager systemManager;
+    private MaintenanceSwitch maintenanceSwitch;
     public int next_id;
 
     public ElevatorController() {
@@ -47,6 +48,8 @@ public class ElevatorController {
         doorOperator = new DoorOperator(doorOpeningDevice);
         cabNavigator = new CabNavigator(0, elevatorEngine, directionDisplay, floorNumberDisplay, positionMarkerSensor, doorOperator);
         cabController = new CabController(passengerDispatcher, cabNavigator, SAFETY_LIMIT);
+        systemManager = new SystemManager(positionMarkerSensor, doorOperator);
+        maintenanceSwitch = new MaintenanceSwitch(systemManager);
         next_id = 0;
         positionMarkerSensor.setPosition(SummonButton.pressed(1));
         
@@ -124,6 +127,7 @@ public class ElevatorController {
     
     public void run(){
         boolean exit;
+        boolean running;
         Scanner scan;
         scan = new Scanner(System.in);
         int option;
@@ -132,14 +136,17 @@ public class ElevatorController {
 
         while(!exit){
             //mode operator atau penumpang
+            running = maintenanceSwitch.getElevatorStat();
             System.out.println("Elevator");
             System.out.println("1. Passenger Mode");
             System.out.println("2. Operator Mode");
             System.out.println("3. Exit");
             System.out.print("Enter option : ");
             option = scan.nextInt();
+            
             switch(option){
                 case 1:{
+                    if(running){
                     while(!exit){
                         System.out.println("\nQueue for Elevator is empty");
                         System.out.println("1. Initialize new Passenger");
@@ -163,10 +170,23 @@ public class ElevatorController {
                             }
                         }
                     }
+                    } else {
+                        System.out.println("The elevator is off");
+                    }
                     exit = false;
                     break;
                 }
                 case 2:{
+                    int mode;
+                    System.out.println("\n====Elevator Switch====");
+                    System.out.println("1. Turn On");
+                    System.out.println("2. Turn Off");
+                    mode = scan.nextInt();
+                    if(mode==1){
+                        maintenanceSwitch.TurnOn();
+                    } else {
+                        maintenanceSwitch.TurnOff();
+                    }
                     break;
                 }
                 case 3:{

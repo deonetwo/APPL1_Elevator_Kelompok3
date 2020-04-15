@@ -4,10 +4,10 @@ import controller.SystemManager;
 
 /**
  *
- * @author KhoirunnisaPutri
+ * Penanggung jawab: KhoirunnisaPutri
  */
 public class MaintenanceSwitch{
-    private boolean isRunning;
+    private boolean isRunning=false;
     private SystemManager SysManage;
     public MaintenanceSwitch(SystemManager SysManage){
         this.isRunning=false;
