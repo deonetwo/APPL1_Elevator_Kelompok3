@@ -1,5 +1,7 @@
 package controller;
-
+/**
+ * credit : Dewanto
+ */
 public interface ElevatorState {
     
     /*

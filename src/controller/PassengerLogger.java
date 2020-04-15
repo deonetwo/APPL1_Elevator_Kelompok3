@@ -6,6 +6,10 @@ import java.util.Set;
 
 import component.Passenger;
 
+/**
+ * credit : Rayhan Azka
+ */
+
 public class PassengerLogger {
     private Set<Passenger> passengerQueue;
 

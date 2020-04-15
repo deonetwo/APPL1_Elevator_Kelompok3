@@ -1,12 +1,15 @@
 package component;
 
+/**
+ * credit : Mufqi, Rayhan Azka
+ */
 public class FloorRequest extends Request {
 
     private FloorRequest(int number) {
         super(number);
     }
 
-    public boolean isFloorRequest(){
+    public boolean isFloorRequest() {
         return true;
     }
 
@@ -21,11 +24,11 @@ public class FloorRequest extends Request {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj == null)
+        if (obj == null)
             return false;
-        if(!(obj instanceof FloorRequest))
+        if (!(obj instanceof FloorRequest))
             return false;
-        if(obj == this)
+        if (obj == this)
             return true;
         return this.getFloorNumber() == ((FloorRequest) obj).getFloorNumber();
     }

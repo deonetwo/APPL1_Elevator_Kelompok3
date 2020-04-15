@@ -4,6 +4,10 @@ import java.util.Iterator;
 
 import component.*;
 
+/**
+ * credit : Mufqi, Rayhan Azka
+ */
+
 public class CabNavigator {
     private int speed;
     private String direction;
@@ -45,9 +49,9 @@ public class CabNavigator {
                     System.out.println(
                             "Elevator Stopped at Floor " + positionMarkerSensor.MarkerDetected().getFloorNumber());
                     doorOperator.doorOpened();
-                    list.passengerAction(positionMarkerSensor);  
-                    doorOperator.doorClosed(); 
-                    System.out.print("\n");     
+                    list.passengerAction(positionMarkerSensor);
+                    doorOperator.doorClosed();
+                    System.out.print("\n");
                     break;
                 } else if ((current.isStatus() == false && current.getSourceFloor()
                         .getFloorNumber() == positionMarkerSensor.MarkerDetected().getFloorNumber())) {
@@ -74,16 +78,15 @@ public class CabNavigator {
 
     void calculateNewDirection() {
         int floorForCabToMove;
-        if(passenger.isStatus()==false){
+        if (passenger.isStatus() == false) {
             floorForCabToMove = passenger.getSourceFloor().getFloorNumber();
-        } else{
+        } else {
             floorForCabToMove = passenger.getDestination().getFloorNumber();
         }
-        
+
         if (floorForCabToMove > positionMarkerSensor.MarkerDetected().getFloorNumber()) {
             this.direction = "up";
-        } else if (floorForCabToMove < positionMarkerSensor.MarkerDetected()
-                .getFloorNumber()) {
+        } else if (floorForCabToMove < positionMarkerSensor.MarkerDetected().getFloorNumber()) {
             this.direction = "down";
         }
     }
@@ -99,12 +102,14 @@ public class CabNavigator {
         }
     }
 
-    boolean isCabAtDestinationFloor() {
-        return passenger.getDestination().getFloorNumber() == positionMarkerSensor.MarkerDetected().getFloorNumber();
-    }
-
-    public PositionMarkerSensor getPositionMarkerSensor() {
-        return positionMarkerSensor;
+    public boolean isCabAtDestinationFloor() {
+        int floorForCabToMove;
+        if (passenger.isStatus() == false) {
+            floorForCabToMove = passenger.getSourceFloor().getFloorNumber();
+        } else {
+            floorForCabToMove = passenger.getDestination().getFloorNumber();
+        }
+        return floorForCabToMove == positionMarkerSensor.MarkerDetected().getFloorNumber();
     }
 
     public void setPositionMarkerSensor(PositionMarkerSensor positionMarkerSensor) {

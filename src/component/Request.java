@@ -1,5 +1,10 @@
 package component;
 
+/**
+ * credit : Mufqi, Rayhan Azka
+ *          Chofief dan Fajrina
+ */
+
 public abstract class Request {
     private int number;
     private boolean lightState;

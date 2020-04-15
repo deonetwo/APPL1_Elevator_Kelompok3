@@ -12,16 +12,18 @@ import component.SummonButton;
 public class SystemManager {
     private PositionMarkerSensor position;
     private DoorOperator doorOperator;
-    public SystemManager(PositionMarkerSensor position, DoorOperator doorOperator){
-        this.position=position;
-        this.doorOperator=doorOperator;
+
+    public SystemManager(PositionMarkerSensor position, DoorOperator doorOperator) {
+        this.position = position;
+        this.doorOperator = doorOperator;
     }
-    public void ShutDown(){
+
+    public void ShutDown() {
         position.setPosition(SummonButton.pressed(1));
         doorOperator.doorClosed();
     }
-    public void Initialize(){
+
+    public void Initialize() {
 
     }
-    
 }

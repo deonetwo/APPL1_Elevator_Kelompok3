@@ -2,12 +2,16 @@ package controller;
 
 import component.*;
 
+/**
+ * credit : Dewanto, Mufqi, Rayhan Azka
+ */
+
 public class CabController {
     private PassengerDispatcher passengerDispatcher;
     private int safetyLimit;
     private CabNavigator cabNavigator;
-    public LoadSensor loadSensor;
-    public LoadBell loadBell;
+    private LoadSensor loadSensor;
+    private LoadBell loadBell;
 
     public CabController(PassengerDispatcher passengerDispatcher, CabNavigator cabNavigator, int safetyLimit) {
         this.passengerDispatcher = passengerDispatcher;
@@ -19,6 +23,7 @@ public class CabController {
 
     public void processRequest(Passenger pass) {
         cabNavigator.moveToFloor(pass, passengerDispatcher);
+        loadSensor.addWeight(-(pass.getWeight())); // nanti direfactor bentar..
     }
 
     public void turnLightOff(Request floor) {
@@ -29,11 +34,15 @@ public class CabController {
         loadSensor.addWeight(weight);
     }
 
-    public void WeightChanged(int newWeight) {
+    public boolean WeightChanged(Passenger pass) {
+        loadSensor.addWeight(pass.getWeight());
         if (loadSensor.getWeight() <= safetyLimit) {
-            // startNormalOperation();
+            return loadSensor.inSafety;
         } else {
             loadBell.Ring();
+            loadSensor.addWeight(-(pass.getWeight()));
+            System.out.println("Passenger with id " + pass.getId() + " cannot entered the cab.");
+            return loadSensor.OverWeight;
         }
     }
 
@@ -51,5 +60,13 @@ public class CabController {
 
     public void setCabNavigator(CabNavigator cabNavigator) {
         this.cabNavigator = cabNavigator;
+    }
+
+    public LoadSensor getLoadSensor() {
+        return this.loadSensor;
+    }
+
+    public LoadBell getLoadBell() {
+        return this.loadBell;
     }
 }
