@@ -24,6 +24,7 @@ public class DoorOperator {
          }
          else {
              currentFloor = position.MarkerDetected().getFloorNumber();
+             doorProcess();
         }
     }
     
