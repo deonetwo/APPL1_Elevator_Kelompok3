@@ -47,7 +47,7 @@ public class PassengerDispatcher {
                 current.getDestination().getFloorNumber() == 
                 positionMarkerSensor.MarkerDetected().getFloorNumber()) {
                 System.out.println("Passenger "+ current.getId() + " has arrived at destination");
-                loadSensor.addWeight(-current.getWeight());
+                loadSensor.reduceWeight(current.getWeight());
                 it.remove();
                 
             } else if(current.isStatus() == false && 
