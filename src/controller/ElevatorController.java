@@ -8,7 +8,7 @@ import java.util.Set;
 
 /* 
     credit : Chofief, Dewanto, Mufqi , Rayhan Azka, Khoirunnisa
-             Fatharani
+             Fatharani, Fajrina
 */
 
 public class ElevatorController {
