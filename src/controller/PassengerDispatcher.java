@@ -45,7 +45,7 @@ public class PassengerDispatcher {
                 current.setStatus(true);
             }
         }
-        System.out.println();
+        //System.out.println();
     }
 
     public Set<Passenger> getPassengerQueue() {

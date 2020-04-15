@@ -15,14 +15,14 @@ import component.*;
      */
 
 public class DoorOpeningDevice {
-    DoorOperator door;
-    FloorRequest floor;
+    // DoorOperator door;
+    // FloorRequest floor;
     boolean isOpen;
     
-    public DoorOpeningDevice(DoorOperator door, FloorRequest floor, int currentFloor) {
-        this.door = door;
-        this.floor =  floor;
-    }
+    // public DoorOpeningDevice(DoorOperator door, FloorRequest floor, int currentFloor) {
+    //     this.door = door;
+    //     this.floor =  floor;
+    // }
    
     public void setDoor(boolean status){
         this.isOpen = status;

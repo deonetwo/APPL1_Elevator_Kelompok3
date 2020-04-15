@@ -12,14 +12,16 @@ public class CabNavigator {
     private DirectionDisplay directionDisplay;
     private FloorNumberDisplay floorNumberDisplay;
     private PositionMarkerSensor positionMarkerSensor;
+    private DoorOperator doorOperator;
 
     public CabNavigator(int speed, ElevatorEngine eEngine, DirectionDisplay dDisplay, FloorNumberDisplay fnDisplay,
-            PositionMarkerSensor pmSensor) {
+            PositionMarkerSensor pmSensor, DoorOperator dOperator) {
         this.speed = speed;
         this.elevatorEngine = eEngine;
         this.directionDisplay = dDisplay;
         this.floorNumberDisplay = fnDisplay;
         this.positionMarkerSensor = pmSensor;
+        this.doorOperator = dOperator;
     }
 
     public void moveToFloor(Passenger passenger, PassengerDispatcher list) {
@@ -42,17 +44,23 @@ public class CabNavigator {
                     calculateNewSpeed();
                     System.out.println(
                             "Elevator Stopped at Floor " + positionMarkerSensor.MarkerDetected().getFloorNumber());
+                    doorOperator.doorOpened();
+                    list.passengerAction(positionMarkerSensor);  
+                    doorOperator.doorClosed(); 
+                    System.out.print("\n");     
                     break;
                 } else if ((current.isStatus() == false && current.getSourceFloor()
                         .getFloorNumber() == positionMarkerSensor.MarkerDetected().getFloorNumber())) {
                     calculateNewSpeed();
                     System.out.println(
                             "Elevator Stopped at Floor " + positionMarkerSensor.MarkerDetected().getFloorNumber());
+                    doorOperator.doorOpened();
+                    list.passengerAction(positionMarkerSensor);
+                    doorOperator.doorClosed();
+                    System.out.print("\n");
                     break;
                 }
             }
-
-            list.passengerAction(positionMarkerSensor);
         }
     }
 

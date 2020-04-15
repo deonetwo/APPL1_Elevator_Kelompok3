@@ -29,6 +29,8 @@ public class ElevatorController {
     public DirectionDisplay directionDisplay;
     public FloorNumberDisplay floorNumberDisplay;
     public PositionMarkerSensor positionMarkerSensor;
+    public DoorOperator doorOperator;
+    public DoorOpeningDevice doorOpeningDevice;
     public static final int SAFETY_LIMIT = 1000;
 
     public int next_id;
@@ -41,7 +43,9 @@ public class ElevatorController {
         floorNumberDisplay = new FloorNumberDisplay();
         directionDisplay = new DirectionDisplay();
         elevatorEngine = new ElevatorEngine();
-        cabNavigator = new CabNavigator(0, elevatorEngine, directionDisplay, floorNumberDisplay, positionMarkerSensor);
+        doorOpeningDevice = new DoorOpeningDevice();
+        doorOperator = new DoorOperator(doorOpeningDevice);
+        cabNavigator = new CabNavigator(0, elevatorEngine, directionDisplay, floorNumberDisplay, positionMarkerSensor, doorOperator);
         cabController = new CabController(passengerDispatcher, cabNavigator, SAFETY_LIMIT);
         next_id = 0;
         positionMarkerSensor.setPosition(SummonButton.pressed(1));
@@ -94,9 +98,9 @@ public class ElevatorController {
         System.out.println("Input the number of passengers : ");
         N = scan.nextInt();
         for(int i = 0; i < N ; i++) {
-            System.out.println("== Passenger " + (i+1) + " ==");
             next_id++;
             id = next_id;
+            System.out.println("== Passenger " + next_id + " ==");
             System.out.println("Enter Passenger Source Floor : ");
             sourceFloor = SummonButton.pressed(scan.nextInt());
             System.out.println("Enter Passenger Destination Floor : ");
@@ -110,9 +114,12 @@ public class ElevatorController {
                 passengerLogger.AddPassengerToQueue(new Passenger(id, weight, sourceFloor, destinationFloor, false));
             }
         }
+        doorOperator.doorOpened();
         for (Integer i : temp) {
             System.out.println("Passenger "+ i + " has entered the cab");
         }
+        doorOperator.doorClosed();
+        System.out.println();
     }
     
     public void run(){
