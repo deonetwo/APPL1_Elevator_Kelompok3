@@ -53,6 +53,7 @@ public class PassengerDispatcher {
             } else if(current.isStatus() == false && 
                 current.getSourceFloor().getFloorNumber() == 
                 positionMarkerSensor.MarkerDetected().getFloorNumber()) {
+                SummonButton.released((SummonButton) current.getSourceFloor());
                 if(loadSensor.WeightChanged(current) != loadSensor.OverWeight){
                     System.out.println("Passenger "+ current.getId() + " has entered the cab");
                     current.setStatus(true);
