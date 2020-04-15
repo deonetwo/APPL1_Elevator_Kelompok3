@@ -1,4 +1,5 @@
 package controller;
+import java.util.ArrayList;
 //import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 //import java.util.Map;
@@ -30,6 +31,8 @@ public class ElevatorController {
     public PositionMarkerSensor positionMarkerSensor;
     public static final int SAFETY_LIMIT = 1000;
 
+    public int next_id;
+
     public ElevatorController() {
         passengerQueue = new LinkedHashSet<Passenger>();
         passengerLogger = new PassengerLogger(passengerQueue);
@@ -40,6 +43,8 @@ public class ElevatorController {
         elevatorEngine = new ElevatorEngine();
         cabNavigator = new CabNavigator(0, elevatorEngine, directionDisplay, floorNumberDisplay, positionMarkerSensor);
         cabController = new CabController(passengerDispatcher, cabNavigator, SAFETY_LIMIT);
+        next_id = 0;
+        positionMarkerSensor.setPosition(SummonButton.pressed(1));
         
         // onIdle = new OnIdle(this);
         // goingUp = new GoingUp(this);
@@ -82,7 +87,32 @@ public class ElevatorController {
         Request sourceFloor;
         Request destinationFloor;
         Scanner scan;
+        int N;
+        ArrayList<Integer> temp = new ArrayList<Integer>();
         scan = new Scanner(System.in);
+
+        System.out.println("Input the number of passengers : ");
+        N = scan.nextInt();
+        for(int i = 0; i < N ; i++) {
+            System.out.println("== Passenger " + (i+1) + " ==");
+            next_id++;
+            id = next_id;
+            System.out.println("Enter Passenger Source Floor : ");
+            sourceFloor = SummonButton.pressed(scan.nextInt());
+            System.out.println("Enter Passenger Destination Floor : ");
+            destinationFloor = FloorRequest.pressed(scan.nextInt());
+            System.out.println("Enter Passenger Weight : ");
+            weight = scan.nextInt();
+            if(positionMarkerSensor.MarkerDetected().getFloorNumber() == sourceFloor.getFloorNumber()) {
+                passengerLogger.AddPassengerToQueue(new Passenger(id, weight, sourceFloor, destinationFloor, true));
+                temp.add(id);
+            } else {
+                passengerLogger.AddPassengerToQueue(new Passenger(id, weight, sourceFloor, destinationFloor, false));
+            }
+        }
+        for (Integer i : temp) {
+            System.out.println("Passenger "+ i + " has entered the cab");
+        }
     }
     
     public void run(){
@@ -90,7 +120,7 @@ public class ElevatorController {
         Scanner scan;
         scan = new Scanner(System.in);
         int option;
-
+        
         exit = false;
 
         while(!exit){
@@ -113,10 +143,11 @@ public class ElevatorController {
                             case 1:{
                                 addPassengers();
                                 while(!passengerDispatcher.checkQueueForPassenger()){
-
+                                    // cabController.addWeight(passengerDispatcher.determineNextPassengerToProcess().getWeight());
+                                    // cabController.WeightChanged(loadSensor.getWeight());
+                                    cabController.processRequest(passengerDispatcher.determineNextPassengerToProcess());                                                                        
+                                    // cabNavigator.moveToFloor(passengerDispatcher.determineNextPassengerToProcess(), passengerDispatcher);
                                 }
-                                
-
                                 break;
                             }
                             case 2:{
@@ -140,7 +171,7 @@ public class ElevatorController {
     
         
 
-        while(true) {
+        // while(true) {
             /*
             while tidak ada yang summon lantai lagi
             apakah ada yang summon lantai?
@@ -158,6 +189,6 @@ public class ElevatorController {
 
             //sudah sampai di lantai tujuan
             */
-        }
+        // }
     }
 }

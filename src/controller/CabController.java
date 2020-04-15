@@ -9,8 +9,7 @@ public class CabController {
     public LoadSensor loadSensor;
     public LoadBell loadBell;
 
-    public CabController(PassengerDispatcher passengerDispatcher,
-        CabNavigator cabNavigator, int safetyLimit) {
+    public CabController(PassengerDispatcher passengerDispatcher, CabNavigator cabNavigator, int safetyLimit) {
         this.passengerDispatcher = passengerDispatcher;
         this.cabNavigator = cabNavigator;
         this.safetyLimit = safetyLimit;
@@ -18,12 +17,8 @@ public class CabController {
         this.loadBell = new LoadBell();
     }
 
-    public void processRequest(Passenger floor) {
-        cabNavigator.moveToFloor(floor, passengerDispatcher);
-    }
-
-    public void startOperation() {
-
+    public void processRequest(Passenger pass) {
+        cabNavigator.moveToFloor(pass, passengerDispatcher);
     }
 
     public void turnLightOff(Request floor) {
@@ -35,10 +30,9 @@ public class CabController {
     }
 
     public void WeightChanged(int newWeight) {
-        if(loadSensor.getWeight() <= safetyLimit){
-            startOperation();
-        }
-        else{
+        if (loadSensor.getWeight() <= safetyLimit) {
+            // startNormalOperation();
+        } else {
             loadBell.Ring();
         }
     }

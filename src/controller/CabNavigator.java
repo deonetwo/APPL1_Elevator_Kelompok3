@@ -1,6 +1,8 @@
 package controller;
-import component.*;
 
+import java.util.Iterator;
+
+import component.*;
 
 public class CabNavigator {
     private int speed;
@@ -11,8 +13,8 @@ public class CabNavigator {
     private FloorNumberDisplay floorNumberDisplay;
     private PositionMarkerSensor positionMarkerSensor;
 
-    public CabNavigator(int speed, ElevatorEngine eEngine, DirectionDisplay dDisplay,
-                            FloorNumberDisplay fnDisplay, PositionMarkerSensor pmSensor) {
+    public CabNavigator(int speed, ElevatorEngine eEngine, DirectionDisplay dDisplay, FloorNumberDisplay fnDisplay,
+            PositionMarkerSensor pmSensor) {
         this.speed = speed;
         this.elevatorEngine = eEngine;
         this.directionDisplay = dDisplay;
@@ -22,43 +24,68 @@ public class CabNavigator {
 
     public void moveToFloor(Passenger passenger, PassengerDispatcher list) {
         this.passenger = passenger;
-        calculateNewSpeed();
-        while(!isCabAtDestinationFloor()) {
+        Iterator<Passenger> it;
+        Passenger current;
+        while (!isCabAtDestinationFloor()) {
+            calculateNewSpeed();
             floorNumberDisplay.show(positionMarkerSensor.MarkerDetected());
             calculateNewDirection();
             elevatorEngine.move(this.speed, this.direction);
             directionDisplay.show(elevatorEngine.getDirection());
             calculateNewPosition();
+
+            it = list.getPassengerQueue().iterator();
+            while (it.hasNext()) {
+                current = it.next();
+                if (current.isStatus() == true && current.getDestination().getFloorNumber() == positionMarkerSensor
+                        .MarkerDetected().getFloorNumber()) {
+                    calculateNewSpeed();
+                    System.out.println(
+                            "Elevator Stopped at Floor " + positionMarkerSensor.MarkerDetected().getFloorNumber());
+                    break;
+                } else if ((current.isStatus() == false && current.getSourceFloor()
+                        .getFloorNumber() == positionMarkerSensor.MarkerDetected().getFloorNumber())) {
+                    calculateNewSpeed();
+                    System.out.println(
+                            "Elevator Stopped at Floor " + positionMarkerSensor.MarkerDetected().getFloorNumber());
+                    break;
+                }
+            }
+
             list.passengerAction(positionMarkerSensor);
         }
-        calculateNewSpeed();
     }
 
-    void calculateNewSpeed() {
-        if(this.speed == 0) {
+    public void calculateNewSpeed() {
+        if (this.speed == 0) {
             this.speed += 20;
-        }
-        else{
+        } else {
             this.speed = 0;
         }
     }
 
     void calculateNewDirection() {
-        if(passenger.getDestination().getFloorNumber() > positionMarkerSensor.MarkerDetected().getFloorNumber()){
-           this.direction = "up";
+        int floorForCabToMove;
+        if(passenger.isStatus()==false){
+            floorForCabToMove = passenger.getSourceFloor().getFloorNumber();
+        } else{
+            floorForCabToMove = passenger.getDestination().getFloorNumber();
         }
-        else if(passenger.getDestination().getFloorNumber() < positionMarkerSensor.MarkerDetected().getFloorNumber()){
+        
+        if (floorForCabToMove > positionMarkerSensor.MarkerDetected().getFloorNumber()) {
+            this.direction = "up";
+        } else if (floorForCabToMove < positionMarkerSensor.MarkerDetected()
+                .getFloorNumber()) {
             this.direction = "down";
         }
     }
 
     void calculateNewPosition() {
         Request newFloor;
-        if(this.direction.equals("up")){
+        if (this.direction.equals("up")) {
             newFloor = FloorRequest.pressed(positionMarkerSensor.MarkerDetected().getFloorNumber() + 1);
             positionMarkerSensor.setPosition(newFloor);
-        }
-        else if(this.direction.equals("down")){
+        } else if (this.direction.equals("down")) {
             newFloor = FloorRequest.pressed(positionMarkerSensor.MarkerDetected().getFloorNumber() - 1);
             positionMarkerSensor.setPosition(newFloor);
         }

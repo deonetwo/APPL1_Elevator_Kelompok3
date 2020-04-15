@@ -29,8 +29,6 @@ public class PassengerDispatcher {
     public void passengerAction(PositionMarkerSensor positionMarkerSensor) {
         Iterator<Passenger> it = passengerQueue.iterator();
         Passenger current;
-        System.out.println("Elevator Stopped at Floor " + 
-            positionMarkerSensor.MarkerDetected().getFloorNumber());
 
         while(it.hasNext()) {
             current = it.next();
