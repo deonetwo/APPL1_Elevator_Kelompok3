@@ -1,5 +1,14 @@
 {
     "liveshare.allowGuestDebugControl": true,
     "liveshare.allowGuestTaskControl": true,
-    "liveshare.languages.allowGuestCommandControl": true
+    "liveshare.languages.allowGuestCommandControl": true,
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "extensions.ignoreRecommendations": true,
+    "files.autoSave": "off",
+    "debug.allowBreakpointsEverywhere": true
 }
