@@ -5,6 +5,10 @@ package component;
  */
 public class FloorRequest extends Request {
 
+    /**
+     * implementasi refactoring pull up field, extract method, 
+     * extract subclass, pull up method, pull up constructor body
+     */
     private FloorRequest(int number) {
         super(number);
     }

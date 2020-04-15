@@ -4,8 +4,12 @@ package component;
  * credit : Mufqi, Rayhan Azka
  */
 public class ElevatorEngine {
-    int speed;
-    String direction;
+    /**
+     * Implementasi refactoring encapsulate field
+     */
+
+    private int speed;
+    private String direction;
 
     public void move(int speed, String direction) {
         this.speed = speed;
@@ -18,5 +22,13 @@ public class ElevatorEngine {
 
     public String getDirection() {
         return this.direction;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
     }
 }

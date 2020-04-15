@@ -7,6 +7,11 @@ import controller.SystemManager;
  * Penanggung jawab: KhoirunnisaPutri
  */
 public class MaintenanceSwitch {
+
+    /**
+     * implementasi refactoring encapsulate field
+     */
+
     private boolean isRunning = false;
     private SystemManager SysManage;
 

@@ -54,40 +54,6 @@ public class ElevatorController {
         maintenanceSwitch = new MaintenanceSwitch(systemManager);
         next_id = 0;
         positionMarkerSensor.setPosition(SummonButton.pressed(1));
-
-        // onIdle = new OnIdle(this);
-        // goingUp = new GoingUp(this);
-        // goingDown = new GoingDown(this);
-        // doorOpened = new DoorOpened(this);
-        // doorClosed = new DoorClosed(this);
-        // int jpenumpang, fnumber, newPersonWeight;
-        // Request processed;
-        // Request processed;
-        // Request processed;
-        // Request processed;
-        // Request processed;
-        // positionMarkerSensor.setPosition(FloorRequest.pressed(1));
-
-        // System.out.println("Masukkan jumlah penumpang : ");
-        // jpenumpang = scan.nextInt();
-        // for(int i = 0; i < jpenumpang; i++) {
-        // System.out.println("== Penumpang " + (i+1) + " ==");
-        // System.out.println("Masukkan tujuan penumpang : ");
-        // fnumber = scan.nextInt();
-        // t_ System.out.println("Masukkan Berat penumpang : ");
-        // t_ new;PersonWeight = scan.nextInt();
-        // cabController.addWeight(newPersonWeight);
-        // requestLogger.AddRequestToQueue(FloorRequest.pressed(fnumber));
-        // }
-        // cabNavigator.setPositionMarkerSensor(positionMarkerSensor);
-        // cabContrhtoller.setCabNavigator(cabNavigator);
-        // int ieigd;
-        // int w cabController.setRequestDispatcher(requestDispatcher);
-        // while(!requ
-        // estDispatcher.checkQueueForRequest()) {
-        // processed = requestDispatcher.determineNextRequestToProcess();
-        // cabController.processRequest(processed);
-        // }
     }
 
     public void addPassengers() {
@@ -117,6 +83,8 @@ public class ElevatorController {
                 if (cabController.getLoadSensor().WeightChanged(newPassenger) != cabController.getLoadSensor().OverWeight) {
                     passengerLogger.AddPassengerToQueue(newPassenger);
                     temp.add(id);
+                } else{
+                    passengerLogger.AddPassengerToQueue(new Passenger(id, weight, sourceFloor, destinationFloor, false));
                 }
             } else {
                 passengerLogger.AddPassengerToQueue(new Passenger(id, weight, sourceFloor, destinationFloor, false));
@@ -163,12 +131,8 @@ public class ElevatorController {
                                 case 1: {
                                     addPassengers();
                                     while (!passengerDispatcher.checkQueueForPassenger()) {
-                                        // cabController.addWeight(passengerDispatcher.determineNextPassengerToProcess().getWeight());
-                                        // cabController.WeightChanged(loadSensor.getWeight());
                                         cabController
                                                 .processRequest(passengerDispatcher.determineNextPassengerToProcess());
-                                        // cabNavigator.moveToFloor(passengerDispatcher.determineNextPassengerToProcess(),
-                                        // passengerDispatcher);
                                     }
                                     break;
                                 }
@@ -209,20 +173,5 @@ public class ElevatorController {
                 }
             }
         }
-
-        // while(true) {
-        /*
-         * while tidak ada yang summon lantai lagi apakah ada yang summon lantai? jika
-         * ada, lantai berapa? jika request lantai baru < lantai tujuan awal berhenti di
-         * request lantai baru masukan banyaknya penumpang dan berat sebanyak N kali
-         * masukan floor request sebanyak N kali floor request masuk ke antrian lakukan
-         * penambahan berat lanjutkan ke lantai tujuan sesuai dengan queue
-         * (tekecil/terdekat didahulukan) jika tidak, menuju lantai tujuan awal masukan
-         * request lantai baru ke list floor request jika tidak, lanjutkan ke lanta
-         * tujuan.
-         * 
-         * //sudah sampai di lantai tujuan
-         */
-        // }
     }
 }

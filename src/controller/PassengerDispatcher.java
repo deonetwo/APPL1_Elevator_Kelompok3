@@ -11,10 +11,15 @@ import component.PositionMarkerSensor;
 //import component.Request;
 
 /**
- * credit : Mufqi, Rayhan Azka
+ * credit : Dewanto, Mufqi, Rayhan Azka
  */
 
 public class PassengerDispatcher {
+
+    /**
+     * implementasi refactoring encapsulate collections
+     */
+
     private Set<Passenger> passengerQueue;
     private LoadSensor loadSensor;
 
@@ -54,9 +59,8 @@ public class PassengerDispatcher {
                 }
             }
         }
-        //System.out.println();
     }
-
+    
     public Set<Passenger> getPassengerQueue() {
         return this.passengerQueue;
     }
@@ -64,5 +68,4 @@ public class PassengerDispatcher {
     public void setLoadSensor(LoadSensor loadSensor){
         this.loadSensor = loadSensor;
     }
-    //checkForAvailableCabs()   ??????? Buat naon ieu
 }

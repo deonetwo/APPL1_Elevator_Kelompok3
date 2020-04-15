@@ -6,6 +6,15 @@ package component;
  */
 
 public abstract class Request {
+
+    /**
+     * Implementasi refactoring self encpsulate field
+     */
+    /**
+     * implementasi refactoring pull up field, extract method, 
+     * extract subclass, pull up method, pull up constructor body
+     */
+
     private int number;
     private boolean lightState;
 

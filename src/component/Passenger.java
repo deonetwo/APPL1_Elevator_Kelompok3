@@ -5,6 +5,12 @@ package component;
  */
 
 public class Passenger {
+
+	/**
+	 * Implementasi refactoring 
+	 * self encapsulate field dan encapsulate field
+	 */
+
 	private int id;
     private int weight;
     private Request sourceFloor;

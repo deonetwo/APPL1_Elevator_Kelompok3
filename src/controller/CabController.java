@@ -7,7 +7,13 @@ import component.*;
  */
 
 public class CabController {
+
+    /**
+     * Implementasi refactoring encapsulate field
+     */
+
     private PassengerDispatcher passengerDispatcher;
+    private int safetyLimit;
     private CabNavigator cabNavigator;
     private LoadSensor loadSensor;
     private LoadBell loadBell;
@@ -21,6 +27,7 @@ public class CabController {
 
     public void processRequest(Passenger pass) {
         cabNavigator.moveToFloor(pass, passengerDispatcher);
+        
     }
 
     public void turnLightOff(Request floor) {

@@ -11,6 +11,11 @@ import component.Passenger;
  */
 
 public class PassengerLogger {
+
+    /**
+     * implementasi refactoring encapsulate collections
+     */
+
     private Set<Passenger> passengerQueue;
 
     public PassengerLogger(Set<Passenger> passengerQueue) {

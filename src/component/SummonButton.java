@@ -7,6 +7,10 @@ package component;
  
  
 public class SummonButton extends Request {
+    /**
+     * implementasi refactoring pull up field, extract method, 
+     * extract subclass, pull up method, pull up constructor body
+     */
     private SummonButton(int number) {
         super(number);
     }

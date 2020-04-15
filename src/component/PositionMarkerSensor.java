@@ -5,6 +5,11 @@ package component;
  */
 
 public class PositionMarkerSensor {
+
+    /**
+     * Implementasi refactoring encapsulate field
+     */
+
     private Request position;
 
     public Request MarkerDetected(){
