@@ -1,63 +1,59 @@
 package controller;
-
 import component.*;
 
 
 public class CabNavigator {
     private int speed;
     private String direction;
-    private FloorRequest floorRequest;
+    private Passenger passenger;
     private ElevatorEngine elevatorEngine;
     private DirectionDisplay directionDisplay;
     private FloorNumberDisplay floorNumberDisplay;
     private PositionMarkerSensor positionMarkerSensor;
-    //private boolean jalanga;
 
     public CabNavigator(int speed, ElevatorEngine eEngine, DirectionDisplay dDisplay,
                             FloorNumberDisplay fnDisplay, PositionMarkerSensor pmSensor) {
         this.speed = speed;
-        //this.direction = direction;
         this.elevatorEngine = eEngine;
         this.directionDisplay = dDisplay;
         this.floorNumberDisplay = fnDisplay;
         this.positionMarkerSensor = pmSensor;
     }
 
-    void moveToFloor(FloorRequest floor) {
-        this.floorRequest = floor;
-        //positionMarkerSensor.setPosition(floorRequest);
+    public void moveToFloor(Passenger passenger, PassengerDispatcher list) {
+        this.passenger = passenger;
         calculateNewSpeed();
-        while(!isCabAtDestinationFloor()){
+        while(!isCabAtDestinationFloor()) {
             floorNumberDisplay.show(positionMarkerSensor.MarkerDetected());
             calculateNewDirection();
-            //calculateNewSpeed();
             elevatorEngine.move(this.speed, this.direction);
             directionDisplay.show(elevatorEngine.getDirection());
             calculateNewPosition();
+            list.passengerAction(positionMarkerSensor);
         }
         calculateNewSpeed();
-        System.out.println("Elevator Stopped at Floor " + floor.getFloorNumber() + "\n");
     }
 
     void calculateNewSpeed() {
         if(this.speed == 0) {
             this.speed += 20;
-        } else {
+        }
+        else{
             this.speed = 0;
         }
     }
 
     void calculateNewDirection() {
-        if(floorRequest.getFloorNumber()>positionMarkerSensor.MarkerDetected().getFloorNumber()){
-            this.direction = "up";
+        if(passenger.getDestination().getFloorNumber() > positionMarkerSensor.MarkerDetected().getFloorNumber()){
+           this.direction = "up";
         }
-        else if(floorRequest.getFloorNumber()<positionMarkerSensor.MarkerDetected().getFloorNumber()){
+        else if(passenger.getDestination().getFloorNumber() < positionMarkerSensor.MarkerDetected().getFloorNumber()){
             this.direction = "down";
         }
     }
 
     void calculateNewPosition() {
-        FloorRequest newFloor;
+        Request newFloor;
         if(this.direction.equals("up")){
             newFloor = FloorRequest.pressed(positionMarkerSensor.MarkerDetected().getFloorNumber() + 1);
             positionMarkerSensor.setPosition(newFloor);
@@ -69,6 +65,14 @@ public class CabNavigator {
     }
 
     boolean isCabAtDestinationFloor() {
-        return floorRequest.getFloorNumber() == positionMarkerSensor.MarkerDetected().getFloorNumber();
+        return passenger.getDestination().getFloorNumber() == positionMarkerSensor.MarkerDetected().getFloorNumber();
+    }
+
+    public PositionMarkerSensor getPositionMarkerSensor() {
+        return positionMarkerSensor;
+    }
+
+    public void setPositionMarkerSensor(PositionMarkerSensor positionMarkerSensor) {
+        this.positionMarkerSensor = positionMarkerSensor;
     }
 }

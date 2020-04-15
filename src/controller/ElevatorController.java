@@ -1,5 +1,8 @@
 package controller;
+//import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+//import java.util.Map;
+
 //import java.util.LinkedList;
 //import java.util.Queue;
 import component.*;
@@ -7,74 +10,154 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class ElevatorController {
-    public Set<FloorRequest> requestQueue;
-    public FloorRequest floorRequest;
-    public FloorRequestLogger floorRequestLogger;
-    public RequestDispatcher requestDispatcher;
-    public CabController cabController;
-    public CabNavigator cabNavigator;
+    ElevatorState onIdle;
+    ElevatorState goingUp;
+    ElevatorState goingDown;
+    ElevatorState doorOpened;
+    ElevatorState doorClosed;
+    ElevatorState overWeight;
+    
+    ElevatorState elevatorState;
+
+    public Set<Passenger> passengerQueue;
+    public PassengerLogger passengerLogger;
+    public PassengerDispatcher passengerDispatcher;
     public ElevatorEngine elevatorEngine;
+    public CabNavigator cabNavigator;
+    public CabController cabController;
     public DirectionDisplay directionDisplay;
     public FloorNumberDisplay floorNumberDisplay;
     public PositionMarkerSensor positionMarkerSensor;
-    public LoadSensor loadSensor;
-    public LoadBell loadBell;
-    private Scanner scan;
-    private SystemManager systemManager;
-    private MaintenanceSwitch maintenanceSwitch;
+    public static final int SAFETY_LIMIT = 1000;
 
     public ElevatorController() {
-        requestQueue = new LinkedHashSet<FloorRequest>();
-        floorRequestLogger = new FloorRequestLogger(requestQueue);
-        requestDispatcher = new RequestDispatcher(requestQueue);
-        scan = new Scanner(System.in);
+        passengerQueue = new LinkedHashSet<Passenger>();
+        passengerLogger = new PassengerLogger(passengerQueue);
+        passengerDispatcher = new PassengerDispatcher(passengerQueue);
         positionMarkerSensor = new PositionMarkerSensor();
         floorNumberDisplay = new FloorNumberDisplay();
         directionDisplay = new DirectionDisplay();
         elevatorEngine = new ElevatorEngine();
-        systemManager = new SystemManager();
-        maintenanceSwitch = new MaintenanceSwitch(systemManager);  
+        cabNavigator = new CabNavigator(0, elevatorEngine, directionDisplay, floorNumberDisplay, positionMarkerSensor);
+        cabController = new CabController(passengerDispatcher, cabNavigator, SAFETY_LIMIT);
+        
+        // onIdle = new OnIdle(this);
+        // goingUp = new GoingUp(this);
+        // goingDown = new GoingDown(this);
+        // doorOpened = new DoorOpened(this);
+        // doorClosed = new DoorClosed(this);
+    //     int jpenumpang, fnumber, newPersonWeight;
+    //     Request processed;
+    //     Request processed;
+    //     Request processed;
+    //     Request processed;
+    //     Request processed;
+    //     positionMarkerSensor.setPosition(FloorRequest.pressed(1));
 
+    //     System.out.println("Masukkan jumlah penumpang : ");
+    //     jpenumpang = scan.nextInt();
+    //     for(int i = 0; i < jpenumpang; i++) {
+    //         System.out.println("== Penumpang " + (i+1) + " ==");
+    //         System.out.println("Masukkan  tujuan penumpang : ");
+    //         fnumber = scan.nextInt();
+    //      t_   System.out.println("Masukkan  Berat penumpang : ");
+    //      t_   new;PersonWeight = scan.nextInt(); 
+    //         cabController.addWeight(newPersonWeight);
+    //         requestLogger.AddRequestToQueue(FloorRequest.pressed(fnumber));
+    //     }
+    //     cabNavigator.setPositionMarkerSensor(positionMarkerSensor);
+    //  cabContrhtoller.setCabNavigator(cabNavigator);
+    //  int ieigd;
+        // int w   cabController.setRequestDispatcher(requestDispatcher);
+    //     while(!requ
+        // estDispatcher.checkQueueForRequest()) {
+    //         processed = requestDispatcher.determineNextRequestToProcess();
+    //         cabController.processRequest(processed);
+    //     }
     }
 
-    public void floor_request() {
-        int jpenumpang, fnumber, berat, ac_berat = 0;
-        FloorRequest processed;
-        boolean isRunning = maintenanceSwitch.getElevatorStat();
-        if(isRunning){
-             System.out.println("Masukkan jumlah penumpang : ");
-            jpenumpang = scan.nextInt();
-            for(int i = 0; i < jpenumpang; i++) {
-                System.out.println("== Penumpang " + (i+1) + " ==");
-                System.out.println("Masukkan  tujuan penumpang : ");
-                fnumber = scan.nextInt();
-                System.out.println("Masukkan  Berat penumpang : ");
-                berat = scan.nextInt(); 
-                ac_berat += berat;
-                floorRequestLogger.AddFloorRequestToQueue(FloorRequest.pressed(fnumber));
-            }
-        positionMarkerSensor.setPosition(FloorRequest.pressed(1));
-        cabNavigator = new CabNavigator(0, elevatorEngine, directionDisplay, floorNumberDisplay, positionMarkerSensor);
-        cabController = new CabController(requestDispatcher, ac_berat, cabNavigator);
-        while(!requestDispatcher.checkQueueForRequest()) {
-            processed = requestDispatcher.determineNextRequestToProcess();
-            cabController.processRequest(processed);
-        }
-        } else {
-            System.out.println("Lift dalam keadaan mati");
-        }
-       
+    public void addPassengers(){
+        int id;
+        int weight;
+        Request sourceFloor;
+        Request destinationFloor;
+        Scanner scan;
+        scan = new Scanner(System.in);
     }
     
-    public void elevator_switch(){
-        int mode;
-        System.out.println("Pilih mode:\n1. Aktifkan lift\n2. Matikan lift");
-        mode = scan.nextInt();
-        if(mode==1){
-            maintenanceSwitch.TurnOn();
-        } else {
-            maintenanceSwitch.TurnOff();
+    public void run(){
+        boolean exit;
+        Scanner scan;
+        scan = new Scanner(System.in);
+        int option;
+
+        exit = false;
+
+        while(!exit){
+            //mode operator atau penumpang
+            System.out.println("Elevator");
+            System.out.println("1. Passenger Mode");
+            System.out.println("2. Operator Mode");
+            System.out.println("3. Exit");
+            System.out.print("Enter option : ");
+            option = scan.nextInt();
+            switch(option){
+                case 1:{
+                    while(!exit){
+                        System.out.println("\nQueue for Elevator is empty");
+                        System.out.println("1. Initialize new Passenger");
+                        System.out.println("2. Back");
+                        System.out.print("Enter option : ");
+                        option = scan.nextInt();
+                        switch(option){
+                            case 1:{
+                                addPassengers();
+                                while(!passengerDispatcher.checkQueueForPassenger()){
+
+                                }
+                                
+
+                                break;
+                            }
+                            case 2:{
+                                exit = true;
+                                break;
+                            }
+                        }
+                    }
+                    exit = false;
+                    break;
+                }
+                case 2:{
+                    break;
+                }
+                case 3:{
+                    exit = true;
+                    break;
+                }
+            }
+        }
+    
+        
+
+        while(true) {
+            /*
+            while tidak ada yang summon lantai lagi
+            apakah ada yang summon lantai?
+            jika ada, lantai berapa?
+                jika request lantai baru < lantai tujuan awal
+                    berhenti di request lantai baru
+                    masukan banyaknya penumpang dan berat sebanyak N kali
+                    masukan floor request sebanyak N kali
+                        floor request masuk ke antrian
+                        lakukan penambahan berat
+                        lanjutkan ke lantai tujuan sesuai dengan queue (tekecil/terdekat didahulukan)
+                jika tidak, menuju lantai tujuan awal
+                masukan request lantai baru ke list floor request
+            jika tidak, lanjutkan ke lanta tujuan.
+
+            //sudah sampai di lantai tujuan
+            */
         }
     }
-
 }

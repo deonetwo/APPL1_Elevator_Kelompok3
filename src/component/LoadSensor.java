@@ -1,26 +1,13 @@
 package component;
 
-public class LoadSensor /*extend to cabcontroller ?*/{
-	private int safetyLimit;
-	
-	public LoadSensor(int safeLimit) {
-		this.safetyLimit = safeLimit;
+public class LoadSensor{
+	private int currentWeight = 0;
+
+	public void addWeight(int newWeight){
+		currentWeight += newWeight;
 	}
-	
-	public void WeightChanged(int cabID, int newWeight) {
-		/* 
-		 * LoadSensor.WeightChanged( cabID, newWeight )
-			[cabID == this cab AND newWeight > safetyLimit] /
-			LoadBell.Ring(), DoorOpeningDevice.OpenDoors()
-			Stop Timer to Close Doors Automatically
-			
-			LoadSensor.WeightChanged( cabID, newWeight )
-			[cabID == this cab AND newWeight <= safetyLimit] /
-			Restart Timer to Close Doors Automatically
-			
-			LoadSensor.WeightChanged( cabID, newWeight )
-			[cabID == this cab AND newWeight > safetyLimit] /
-			LoadBell.Ring()
-		 */
+
+	public int getWeight(){
+		return currentWeight;
 	}
 }

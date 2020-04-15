@@ -1,41 +1,61 @@
 package controller;
 
-import component.FloorRequest;
+import component.*;
 
 public class CabController {
-    private RequestDispatcher requestDispatcher;
-    //private FloorRequest floorRequest;
-    private int weight;
+    private PassengerDispatcher passengerDispatcher;
+    private int safetyLimit;
     private CabNavigator cabNavigator;
+    public LoadSensor loadSensor;
+    public LoadBell loadBell;
 
-    public CabController(RequestDispatcher requestDispatcher,
-        int weight, CabNavigator cabNavigator) {
-        this.requestDispatcher = requestDispatcher;
-        //this.floorRequest = floorRequest;
-        this.weight = weight;
-        this.cabNavigator = cabNavigator;    
+    public CabController(PassengerDispatcher passengerDispatcher,
+        CabNavigator cabNavigator, int safetyLimit) {
+        this.passengerDispatcher = passengerDispatcher;
+        this.cabNavigator = cabNavigator;
+        this.safetyLimit = safetyLimit;
+        this.loadSensor = new LoadSensor();
+        this.loadBell = new LoadBell();
     }
 
-    public void processRequest(FloorRequest floor) {
-        cabNavigator.moveToFloor(floor);
+    public void processRequest(Passenger floor) {
+        cabNavigator.moveToFloor(floor, passengerDispatcher);
     }
 
-    public void startOperation(){
+    public void startOperation() {
 
     }
 
-    public void turnLightOff(FloorRequest floor){
+    public void turnLightOff(Request floor) {
         floor.turnLightOff();
     }
 
-    public int getWeight() {
-        return weight;
+    public void addWeight(int weight) {
+        loadSensor.addWeight(weight);
     }
 
-    public void setWeight(int weight) {
-        this.weight = weight;
+    public void WeightChanged(int newWeight) {
+        if(loadSensor.getWeight() <= safetyLimit){
+            startOperation();
+        }
+        else{
+            loadBell.Ring();
+        }
     }
 
-    
+    public PassengerDispatcher getRequestDispatcher() {
+        return passengerDispatcher;
+    }
+
+    public void setRequestDispatcher(PassengerDispatcher requestDispatcher) {
+        this.passengerDispatcher = requestDispatcher;
+    }
+
+    public CabNavigator getCabNavigator() {
+        return cabNavigator;
+    }
+
+    public void setCabNavigator(CabNavigator cabNavigator) {
+        this.cabNavigator = cabNavigator;
+    }
 }
-
